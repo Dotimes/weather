@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the dotimes/weather.
+ *
+ * (c) dotimes <676496871@qq.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Dotimes\Weather;
 
 use GuzzleHttp\Client;
@@ -7,23 +17,24 @@ use Dotimes\Weather\Exceptions\InvalidArgumentException;
 
 class Weather
 {
-	protected $key;
-	protected $guzzleOptions = [];
+    protected $key;
 
-	public function __construct($key)
-	{
-		$this->key = $key;
-	}
+    protected $guzzleOptions = [];
 
-	public function getHttpClient()
-	{
-		return new Client($this->guzzleOptions);
-	}
+    public function __construct($key)
+    {
+        $this->key = $key;
+    }
 
-	public function setGuzzleOptions(array $options)
-	{
-		$this->guzzleOptions = $options;
-	}
+    public function getHttpClient()
+    {
+        return new Client($this->guzzleOptions);
+    }
+
+    public function setGuzzleOptions(array $options)
+    {
+        $this->guzzleOptions = $options;
+    }
 
     public function getLiveWeather($city, $format = 'json')
     {
@@ -35,9 +46,9 @@ class Weather
         return $this->getWeather($city, 'all', $format);
     }
 
-	public function getWeather($city, $type = 'base', $format = 'json')
-	{
-		$url = 'https://restapi.amap.com/v3/weather/weatherInfo';
+    public function getWeather($city, $type = 'base', $format = 'json')
+    {
+        $url = 'https://restapi.amap.com/v3/weather/weatherInfo';
 
         if (!\in_array(\strtolower($format), ['xml', 'json'])) {
             throw new InvalidArgumentException('Invalid response format: '.$format);
@@ -59,9 +70,9 @@ class Weather
                 'query' => $query,
             ])->getBody()->getContents();
 
-            return $format === 'json' ? \json_decode($response, true) : $response;
+            return 'json' === $format ? \json_decode($response, true) : $response;
         } catch (\Exception $e) {
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
-	}
+    }
 }
