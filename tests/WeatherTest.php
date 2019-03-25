@@ -5,9 +5,9 @@ namespace Dotimes\Weather\Tests;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Response;
-use Mockery\Matcher\AnyArgs;  // 一个简单而灵活的PHP模拟对象框架，用于使用PHPUnit
-use Dotimes\Weather\Weather;
+use Mockery\Matcher\AnyArgs;
 use PHPUnit\Framework\TestCase;
+use Dotimes\Weather\Weather;
 use Dotimes\Weather\Exceptions\InvalidArgumentException;
 use Dotimes\Weather\Exceptions\HttpException;
 
@@ -25,7 +25,7 @@ class WeatherTest extends TestCase
         // 断言异常消息为 'Invalid type value(base/all): foo'
         $this->expectExceptionMessage('Invalid type value(base/all): foo');
 
-        $w->getWeather('深圳', 'foo');
+        $w->getWeather('上海', 'foo');
 
         $this->fail('Failed to assert getWeather throw exception with invalid argument.');
     }
@@ -42,7 +42,7 @@ class WeatherTest extends TestCase
         $this->expectExceptionMessage('Invalid response format: array'); 
 
         // 因为支持的格式为 xml/json，所以传入 array 会抛出异常
-        $w->getWeather('深圳', 'base', 'array'); 
+        $w->getWeather('上海', 'base', 'array'); 
 
         // 如果没有抛出异常，就会运行到这行，标记当前测试没成功
         $this->fail('Failed to assert getWeather throw exception with invalid argument.');   
@@ -60,7 +60,7 @@ class WeatherTest extends TestCase
 		$client->allows()->get('https://restapi.amap.com/v3/weather/weatherInfo', [
 			'query' => [
 				'key' => 'mock-key',
-                'city' => '深圳',
+                'city' => '上海',
                 'output' => 'json',
                 'extensions' => 'base',
 			]
@@ -71,7 +71,7 @@ class WeatherTest extends TestCase
 		$w->allows()->getHttpClient()->andReturn($client);
 
 		// 然后调用 `getWeather` 方法，并断言返回值为模拟的返回值。
-        $this->assertSame(['success' => true], $w->getWeather('深圳'));
+        $this->assertSame(['success' => true], $w->getWeather('上海'));
 
         // xml
         $response = new Response(200, [], '<hello>content</hello>');
@@ -79,7 +79,7 @@ class WeatherTest extends TestCase
         $client->allows()->get('https://restapi.amap.com/v3/weather/weatherInfo', [
             'query' => [
                 'key' => 'mock-key',
-                'city' => '深圳',
+                'city' => '上海',
                 'extensions' => 'all',
                 'output' => 'xml',
             ],
@@ -88,8 +88,28 @@ class WeatherTest extends TestCase
         $w = \Mockery::mock(Weather::class, ['mock-key'])->makePartial();
         $w->allows()->getHttpClient()->andReturn($client);
 
-        $this->assertSame('<hello>content</hello>', $w->getWeather('深圳', 'all', 'xml'));
+        $this->assertSame('<hello>content</hello>', $w->getWeather('上海', 'all', 'xml'));
 	}
+
+	public function testGetLiveWeather()
+    {
+        // 将 getWeather 接口模拟为返回固定内容，以测试参数传递是否正确
+        $w = \Mockery::mock(Weather::class, ['mock-key'])->makePartial();
+        $w->expects()->getWeather('上海', 'base', 'json')->andReturn(['success' => true]);
+
+        // 断言正确传参并返回
+        $this->assertSame(['success' => true], $w->getLiveWeather('上海'));
+    }
+
+    public function testGetForecastsWeather()
+    {
+        // 将 getWeather 接口模拟为返回固定内容，以测试参数传递是否正确
+        $w = \Mockery::mock(Weather::class, ['mock-key'])->makePartial();
+        $w->expects()->getWeather('上海', 'all', 'json')->andReturn(['success' => true]);
+
+        // 断言正确传参并返回
+        $this->assertSame(['success' => true], $w->getForecastsWeather('上海'));
+    }
 
 	public function testGetWeatherWithGuzzleRuntimeException()
 	{
@@ -104,7 +124,7 @@ class WeatherTest extends TestCase
 		$this->expectException(HttpException::class);
 		$this->expectExceptionMessage('request timeout');
 
-		$w->getWeather('深圳');
+		$w->getWeather('上海');
 	}
 
 	public function testGetHttpClient()

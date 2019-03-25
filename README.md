@@ -7,7 +7,7 @@
 ## 安装
 
 ```sh
-$ composer require overtrue/weather -vvv
+$ composer require dotimes/weather -vvv
 ```
 
 ## 配置
@@ -27,7 +27,7 @@ $weather = new Weather($key);
 ###  获取实时天气
 
 ```php
-$response = $weather->getWeather('深圳');
+$response = $weather->getLiveWeather('上海');
 ```
 示例：
 
@@ -39,15 +39,15 @@ $response = $weather->getWeather('深圳');
     "infocode": "10000",
     "lives": [
         {
-            "province": "广东",
-            "city": "深圳市",
-            "adcode": "440300",
-            "weather": "中雨",
-            "temperature": "27",
-            "winddirection": "西南",
-            "windpower": "5",
-            "humidity": "94",
-            "reporttime": "2018-08-21 16:00:00"
+            "province": "上海",
+            "city": "上海市",
+            "adcode": "310000",
+            "weather": "晴",
+            "temperature": "10",
+            "winddirection": "北",
+            "windpower": "≤3",
+            "humidity": "91",
+            "reporttime": "2019-03-26 00:18:46"
         }
     ]
 }
@@ -56,70 +56,70 @@ $response = $weather->getWeather('深圳');
 ### 获取近期天气预报
 
 ```
-$response = $weather->getWeather('深圳', 'all');
+$response = $weather->getForecastsWeather('上海');
 ```
 示例：
 
 ```json
 {
-    "status": "1", 
-    "count": "1", 
-    "info": "OK", 
-    "infocode": "10000", 
+    "status": "1",
+    "count": "1",
+    "info": "OK",
+    "infocode": "10000",
     "forecasts": [
         {
-            "city": "深圳市", 
-            "adcode": "440300", 
-            "province": "广东", 
-            "reporttime": "2018-08-21 11:00:00", 
+            "city": "上海市",
+            "adcode": "310000",
+            "province": "上海",
+            "reporttime": "2019-03-26 00:18:46",
             "casts": [
                 {
-                    "date": "2018-08-21", 
-                    "week": "2", 
-                    "dayweather": "雷阵雨", 
-                    "nightweather": "雷阵雨", 
-                    "daytemp": "31", 
-                    "nighttemp": "26", 
-                    "daywind": "无风向", 
-                    "nightwind": "无风向", 
-                    "daypower": "≤3", 
+                    "date": "2019-03-25",
+                    "week": "1",
+                    "dayweather": "阴",
+                    "nightweather": "晴",
+                    "daytemp": "14",
+                    "nighttemp": "10",
+                    "daywind": "西南",
+                    "nightwind": "西南",
+                    "daypower": "≤3",
                     "nightpower": "≤3"
-                }, 
+                },
                 {
-                    "date": "2018-08-22", 
-                    "week": "3", 
-                    "dayweather": "雷阵雨", 
-                    "nightweather": "雷阵雨", 
-                    "daytemp": "32", 
-                    "nighttemp": "27", 
-                    "daywind": "无风向", 
-                    "nightwind": "无风向", 
-                    "daypower": "≤3", 
-                    "nightpower": "≤3"
-                }, 
+                    "date": "2019-03-26",
+                    "week": "2",
+                    "dayweather": "多云",
+                    "nightweather": "多云",
+                    "daytemp": "22",
+                    "nighttemp": "13",
+                    "daywind": "南",
+                    "nightwind": "南",
+                    "daypower": "4",
+                    "nightpower": "4"
+                },
                 {
-                    "date": "2018-08-23", 
-                    "week": "4", 
-                    "dayweather": "雷阵雨", 
-                    "nightweather": "雷阵雨", 
-                    "daytemp": "32", 
-                    "nighttemp": "26", 
-                    "daywind": "无风向", 
-                    "nightwind": "无风向", 
-                    "daypower": "≤3", 
-                    "nightpower": "≤3"
-                }, 
+                    "date": "2019-03-27",
+                    "week": "3",
+                    "dayweather": "小雨",
+                    "nightweather": "小雨",
+                    "daytemp": "17",
+                    "nighttemp": "13",
+                    "daywind": "东北",
+                    "nightwind": "东北",
+                    "daypower": "4",
+                    "nightpower": "4"
+                },
                 {
-                    "date": "2018-08-24", 
-                    "week": "5", 
-                    "dayweather": "雷阵雨", 
-                    "nightweather": "雷阵雨", 
-                    "daytemp": "31", 
-                    "nighttemp": "26", 
-                    "daywind": "无风向", 
-                    "nightwind": "无风向", 
-                    "daypower": "≤3", 
-                    "nightpower": "≤3"
+                    "date": "2019-03-28",
+                    "week": "4",
+                    "dayweather": "中雨",
+                    "nightweather": "小雨",
+                    "daytemp": "17",
+                    "nighttemp": "10",
+                    "daywind": "北",
+                    "nightwind": "北",
+                    "daypower": "4",
+                    "nightpower": "4"
                 }
             ]
         }
@@ -132,41 +132,41 @@ $response = $weather->getWeather('深圳', 'all');
 第三个参数为返回值类型，可选 `json` 与 `xml`，默认 `json`：
 
 ```php
-$response = $weather->getWeather('深圳', 'all', 'xml');
+$response = $weather->getLiveWeather('上海', 'xml');
 ```
 
 示例：
 
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
 <response>
-    <status>1</status>
-    <count>1</count>
-    <info>OK</info>
-    <infocode>10000</infocode>
-    <lives type="list">
-        <live>
-            <province>广东</province>
-            <city>深圳市</city>
-            <adcode>440300</adcode>
-            <weather>中雨</weather>
-            <temperature>27</temperature>
-            <winddirection>西南</winddirection>
-            <windpower>5</windpower>
-            <humidity>94</humidity>
-            <reporttime>2018-08-21 16:00:00</reporttime>
-        </live>
-    </lives>
+	<status>1</status>
+	<count>1</count>
+	<info>OK</info>
+	<infocode>10000</infocode>
+	<lives type="list"><live>
+		<province>上海</province>
+		<city>上海市</city>
+		<adcode>310000</adcode>
+		<weather>晴</weather>
+		<temperature>10</temperature>
+		<winddirection>北</winddirection>
+		<windpower>≤3</windpower>
+		<humidity>91</humidity>
+		<reporttime>2019-03-26 00:18:46</reporttime>
+	</live>
+</lives>
 </response>
 ```
 
 ### 参数说明
 
 ```
-array | string   getWeather(string $city, string $type = 'base', string $format = 'json')
+array | string   getLiveWeather(string $city, string $format = 'json')
+array | string   getForecastsWeather(string $city, string $format = 'json')
 ```
 
 > - `$city` - 城市名，比如：“上海”；
-> - `$type` - 返回内容类型：`base`: 返回实况天气 / `all`:返回预报天气；
 > - `$format`  - 输出的数据格式，默认为 json 格式，当 output 设置为 “`xml`” 时，输出的为 XML 格式的数据。
 
 ### 在 Laravel 中使用
@@ -198,7 +198,8 @@ WEATHER_API_KEY=xxxxxxxxxxxxxxxxxxxxx
 	.
 	public function edit(Weather $weather) 
 	{
-		$response = $weather->getWeather('上海');
+		$response = $weather->getLiveWeather('上海');
+		$response = $weather->getForecastsWeather('上海');
 	}
 	.
 	.
@@ -213,7 +214,8 @@ WEATHER_API_KEY=xxxxxxxxxxxxxxxxxxxxx
 	.
 	public function edit() 
 	{
-		$response = app('weather')->getWeather('上海');
+		$response = app('weather')->getLiveWeather('上海');
+		$response = app('weather')->getForecastsWeather('上海');
 	}
 	.
 	.
