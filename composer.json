@@ -1,10 +1,10 @@
 {
-	"name": "Dotimes/weather",
+	"name": "dotimes/weather",
     "description": "A weather SDK.",
     "license": "MIT",
     "authors": [
         {
-            "name": "Dotimes",
+            "name": "dotimes",
             "email": "6764996871@qq.com"
         }
     ],
