@@ -1,0 +1,28 @@
+{
+	"name": "Dotimes/weather",
+    "description": "A weather SDK.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dotimes",
+            "email": "6764996871@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Dotimes\\Weather\\": "./src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.3",
+        "phpunit/phpunit": "^7.5",
+        "mockery/mockery": "^1.2"
+    },
+    "extra": {
+    	"laravel": {
+    		"providers": [
+    			"Dotimes\\Weather\\ServiceProvider"
+    		]
+    	}
+    }
+}
