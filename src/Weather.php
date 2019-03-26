@@ -23,6 +23,7 @@ class Weather
 
     /**
      * Weather constructor.
+     *
      * @param $key
      */
     public function __construct($key)
@@ -49,7 +50,9 @@ class Weather
     /**
      * @param $city
      * @param string $format
+     *
      * @return mixed|string
+     *
      * @throws HttpException
      * @throws InvalidArgumentException
      */
@@ -61,7 +64,9 @@ class Weather
     /**
      * @param $city
      * @param string $format
+     *
      * @return mixed|string
+     *
      * @throws HttpException
      * @throws InvalidArgumentException
      */
@@ -74,7 +79,9 @@ class Weather
      * @param $city
      * @param string $type
      * @param string $format
+     *
      * @return mixed|string
+     *
      * @throws HttpException
      * @throws InvalidArgumentException
      */
