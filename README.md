@@ -1,9 +1,9 @@
----
-
 # Weather
 
 基于  [高德开放平台](https://lbs.amap.com/dev/id/newuser) 的 PHP 天气信息组件。
-[![Build Status](https://travis-ci.org/dotimes/weather.svg?branch=master)](https://travis-ci.org/dotimes/weather) ![StyleCI build status](https://github.styleci.io/repos/177609837/shield) 
+
+[![Build Status](https://travis-ci.org/dotimes/weather.svg?branch=master)](https://travis-ci.org/dotimes/weather) 
+![StyleCI build status](https://github.styleci.io/repos/177609837/shield) 
 
 ## 安装
 

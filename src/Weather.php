@@ -21,31 +21,63 @@ class Weather
 
     protected $guzzleOptions = [];
 
+    /**
+     * Weather constructor.
+     * @param $key
+     */
     public function __construct($key)
     {
         $this->key = $key;
     }
 
+    /**
+     * @return Client
+     */
     public function getHttpClient()
     {
         return new Client($this->guzzleOptions);
     }
 
+    /**
+     * @param array $options
+     */
     public function setGuzzleOptions(array $options)
     {
         $this->guzzleOptions = $options;
     }
 
+    /**
+     * @param $city
+     * @param string $format
+     * @return mixed|string
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
     public function getLiveWeather($city, $format = 'json')
     {
         return $this->getWeather($city, 'base', $format);
     }
 
+    /**
+     * @param $city
+     * @param string $format
+     * @return mixed|string
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
     public function getForecastsWeather($city, $format = 'json')
     {
         return $this->getWeather($city, 'all', $format);
     }
 
+    /**
+     * @param $city
+     * @param string $type
+     * @param string $format
+     * @return mixed|string
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
     public function getWeather($city, $type = 'base', $format = 'json')
     {
         $url = 'https://restapi.amap.com/v3/weather/weatherInfo';
